@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+	<head>  
+		<title>ThePyScraper</title>
+		<meta charset="UTF-8">
+		<link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" type="text/css" href="scripts/style.css">
+		<script type="text/javascript" src="scripts/jquery-1.11.0.min.js"></script>
+	</head>
+	<body>
+		<script type="text/javascript" src="scripts/infiniteScroll.js"></script>
+		<script type="text/javascript" src="scripts/getPosts.js"></script>
+		<script type="text/javascript" src="scripts/top.js"></script>
+		<div id="wrap">
+			<header> 
+				<h1>ThePyScraper</h1>
+				<span>Scraping Websites since not to long ago.</span>
+				<span id="clock"></span>
+			</header>
+			<script type="text/javascript" src="scripts/clock.js"></script>
+			<div id="content">
+				<aside>
+					<nav>
+						<ul> 
+							<li><a class="top" href="#wrap">Back To Top</a></li>
+							<li><a href="/updateFeeds">Force Update All Feeds</a></li>
+							<li><form name="input" action="/addFeed">
+								Add Feed: <input type="text" name="newFeed">
+								<input type="submit" value="Submit">
+								</form>
+							</li>
+							<li><a href="/quit">Quit ThePyScrapper</a></li>
+						</ul>
+					</nav>
+				</aside>
+				<section id="POST">
+					<!-- POST -->
+				</section>			
+			</div>
+		</div>
+		<footer>
+			<a href="EX5.html">Home</a> | <a href="EX5.html">Contact Us</a> | &copy; Visage.com
+		</footer>
+	</body>
+</html>
