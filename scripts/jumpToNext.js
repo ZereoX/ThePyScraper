@@ -1,19 +1,36 @@
-$(document).bind('keydown', function (evt){
-    if ( evt.keycode = 190 ) {
-        post = $(this).parent();
+$('div.post').first();
 
-        // if I am the last .post in my group...
-        while (    document != post[0] // not reached root
-        && post.find('~.post, ~:has(.post)').length == 0)
-        post = post.parent(); // search siblings of parent instead
+$(document).keydown(function(evt) {
+    if ( evt.keyCode == 190 || evt.keyCode == 188) {
+	    evt.preventDefault();
+	    var t = $(this).text(),
+		that = $(this);
+	}
 
-        nextdiv = post.nextAll('.post, :has(.post)').first();
+    if ( evt.keyCode == 190 ) {
+		if ($('.current').next('div.post').length > 0) {
+			var $next = $('.current').next('.post');
+			var top = $next.offset().top;
 
-        // no next .post found, go back to first post
-        if (nextdiv.length==0) nextdiv = $(document).find('.post:first');
+			$('.current').removeClass('current');     
 
-        $(document).scrollTop(nextdiv.offset().top);
-        // $(this).parent().next() // this is the next div post.
-        return false;
-    }
+			$(function () {
+				$next.addClass('current');
+				$('html, body').animate({scrollTop: $('.current').offset().top }, 'fast');
+			});
+		}
+	}
+	else if ( evt.keyCode == 188 ) {
+		if ($('.current').prev('div.post').length > 0) {
+			var $prev = $('.current').prev('.post');
+			var top = $prev.offset().top;
+
+			$('.current').removeClass('current');
+
+			$(function () {
+				$prev.addClass('current');
+				$('html, body').animate({scrollTop: $('.current').offset().top }, 'fast');
+			});
+		} 
+	}
 });

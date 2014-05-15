@@ -18,22 +18,22 @@ def closeSQLConnection(DBConnection):
 def SQLExecute(DBCursor, SQLStatement):
 	DBCursor.execute(SQLStatement)
 
-def fetchAndProcessFeed(feed_url, feed_date, DBConnection):
-    print("Thread opened with: " + feed_url + ", " + feed_date)
+def fetchAndProcessFeed(feed_id, feed_url, feed_date, DBConnection):
+    print("Thread ID#: " + str(feed_id) + " opened.")
     feedparser._HTMLSanitizer.acceptable_elements.update(['iframe','embed'])
     feed = feedparser.parse(feed_url, modified=feed_date)
 
     if feed.status != 304:
         if hasattr(feed, "modified"):
-            DBConnection.cursor().execute("UPDATE RSSFeeds SET date=? WHERE url=?;", (strftime("%Y-%m-%d %H:%M:%S %Z",feed.modified_parsed, feed_url)))
+            DBConnection.cursor().execute("UPDATE RSSFeeds SET date=? WHERE url=?;", (strftime("%Y-%m-%d %H:%M:%S %Z",feed.modified_parsed), feed_url))
         else:
             DBConnection.cursor().execute("UPDATE RSSFeeds SET date=? WHERE url=?;", (strftime("%Y-%m-%d %H:%M:%S %Z",time.gmtime()), feed_url))
-        storeEntries(feed.entries, DBConnection)
+        storeEntries(feed_id, feed.entries, DBConnection)
     else:
         print("SKIPPING: " + feed_url)
 
-def storeEntries(Entries, DBConnection):
-    for entry in Entries:
+def storeEntries(feed_id, entries, DBConnection):
+    for entry in entries:
         post = len(DBConnection.cursor().execute('SELECT entry_id from RSSEntries WHERE url=?', (entry.link,)).fetchall())
         postContent = ""
         if hasattr(entry, "content"):
@@ -41,4 +41,4 @@ def storeEntries(Entries, DBConnection):
         else:
             postContent = entry.summary
         if post == 0:
-            DBConnection.cursor().execute('INSERT INTO RSSEntries (url, title, content, date) VALUES (?,?,?,?)', (entry.link, entry.title, postContent, strftime("%Y-%m-%d %H:%M:%S %Z",entry.updated_parsed)))
+            DBConnection.cursor().execute('INSERT INTO RSSEntries (feed_id, url, title, content, date) VALUES (?,?,?,?,?)', (feed_id, entry.link, entry.title, postContent, strftime("%Y-%m-%d %H:%M:%S %Z",entry.updated_parsed)))

@@ -5,7 +5,7 @@
 		<meta charset="UTF-8">
 		<link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" type="text/css" href="scripts/style.css">
-		<script type="text/javascript" src="scripts/jquery-1.11.0.min.js"></script>
+		<script type="text/javascript" src="scripts/jQuery.js"></script>
 	</head>
 	<body>
 		<script type="text/javascript" src="scripts/infiniteScroll.js"></script>
@@ -24,12 +24,11 @@
 					<nav>
 						<ul> 
 							<li><a class="top" href="#wrap">Back To Top</a></li>
-							<li><a href="/updateFeeds">Force Update All Feeds</a></li>
-							<li><form name="input" action="/addFeed">
-								Add Feed: <input type="text" name="newFeed">
+							<li><a href="/updateFeeds?feed_id=0">Force Update All Feeds</a></li>
+							<li><form action="/addAFeed">
+								<input type="text" name="feed_url" id="feed_url"></input>
 								<input type="submit" value="Submit">
-								</form>
-							</li>
+							</form></li>
 							<li><a href="/quit">Quit ThePyScrapper</a></li>
 						</ul>
 					</nav>
